@@ -276,7 +276,13 @@ class Sprite
 
 	# get the css class name from image name
 	def class_name(name)
-		".#{name.gsub('/', ' .').gsub(/[_-]hover\b/, ':hover').gsub(/[_-]active\b/, '.active')}"
+		if (name=~/[_-]active$/)
+			class_name=name.gsub('/', ' .').gsub(/[_-]hover\b/, '').gsub(/[_-]active\b/, '')
+			"a:hover .#{class_name}, .active .#{class_name}"
+		else
+			".#{name.gsub('/', ' .').gsub(/[_-]hover\b/, ':hover').gsub(/[_-]active\b/, '.active')}"
+
+		end
 	end
 
 	# read all images under the css sprite directory
