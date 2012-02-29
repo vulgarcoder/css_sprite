@@ -246,6 +246,7 @@ class Sprite
 
 				f.print class_names(results).join(",\n")
 				f.print " \{\n  background: asset-url('#{dest_image_name}') no-repeat;\n"
+				f.print "  display: inline-block;\n"
 				f.print "  vertical-align: text-top;\n"
 				f.print "  width: #{@default_width}px;\n" 
 				f.print "  height: #{@default_height}px;\n" 
