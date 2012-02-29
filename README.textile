@@ -1,3 +1,5 @@
+add less support
+
 h1. css_sprite
 
 automatically css sprite.

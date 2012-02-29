@@ -54,6 +54,8 @@ class Sprite
 
   # output stylesheet, sass, scss or css
   def output_stylesheet(directory, results)
+    if less?
+      output_less(directory, results)
     if sass?
       output_sass(directory, results)
     elsif scss?
@@ -68,6 +70,10 @@ class Sprite
     @engine =~ /sass$/
   end
 
+  # use less
+  def less?
+    @engine =~ /less$/
+  end
   # use scss
   def scss?
     @engine =~ /scss$/
@@ -211,6 +217,39 @@ class Sprite
       end
     end
   end
+# output the css sprite less file
+  def output_less(directory, results)
+    unless results.empty?
+      dest_image_name = dest_image_name(directory)
+      dest_stylesheet_path = dest_stylesheet_path(directory)
+      dest_image_time = File.new(dest_image_path(directory)).mtime
+      File.open(dest_stylesheet_path, 'w') do |f|
+        if @config['suffix']
+          @config['suffix'].each do |key, value|
+            cns = class_names(results, :suffix => key)
+            unless cns.empty?
+              f.print cns.join(",\n")
+              f.print "\{\n"
+              f.print value.split("\n").collect { |text| "  " + text }.join("\n")
+              f.print "\}\n"
+            end
+          end
+        end
+
+        f.print class_names(results).join(",\n")
+        f.print " \{\n  background: url('/#{@css_images_path}/#{dest_image_name}?#{dest_image_time.to_i}') no-repeat;\n\}\n"
+
+        results.each do |result|
+          f.print "#{class_name(result[:name])} \{\n"
+          f.print "  background-position: #{-result[:x]}px #{-result[:y]}px;\n"
+          f.print "  width: #{result[:width]}px;\n" if result[:width]
+          f.print "  height: #{result[:height]}px;\n" if result[:height]
+          f.print " \}\n"
+        end
+      end
+    end
+  end
+
 
   # get all the class names within the same css sprite image
   def class_names(results, options={})
