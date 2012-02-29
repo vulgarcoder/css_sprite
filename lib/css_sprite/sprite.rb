@@ -18,6 +18,8 @@ class Sprite
     @css_images_path = @config['css_images_path'] ||= "images"
     @format = @config['format'] ? @config['format'].downcase : "png"
     @engine = @config['engine'] || "css"
+	@default_width=@config['defaultWidth']||16
+	@default_height=@config['defaultHeight']||16
   end
 
   # execute the css sprite operation
@@ -140,13 +142,18 @@ class Sprite
         end
 
         f.print class_names(results).join(",\n")
-        f.print " \{\n  background: url('/#{@css_images_path}/#{dest_image_name}?#{dest_image_time.to_i}') no-repeat;\n\}\n"
+        f.print " \{\n  background: url('/#{@css_images_path}/#{dest_image_name}?#{dest_image_time.to_i}') no-repeat;\n"
+        f.print " width: #{@default_width}px;\n" 
+        f.print " height: #{@default_height}px;\n" 
+		f.print "\}\n"
 
         results.each do |result|
           f.print "#{class_name(result[:name])} \{"
           f.print " background-position: #{-result[:x]}px #{-result[:y]}px;"
+		  if (result[:width]!=@default_width || result[:height]!=@default_height)
           f.print " width: #{result[:width]}px;" if result[:width]
           f.print " height: #{result[:height]}px;" if result[:height]
+		  end
           f.print " \}\n"
         end
       end
@@ -237,7 +244,7 @@ class Sprite
         end
 
         f.print class_names(results).join(",\n")
-        f.print " \{\n  background: url('/#{@css_images_path}/#{dest_image_name}?#{dest_image_time.to_i}') no-repeat;\n\}\n"
+        f.print " \{\n  background: asset-url('#{dest_image_name}') no-repeat;\n\}\n"
 
         results.each do |result|
           f.print "#{class_name(result[:name])} \{\n"
