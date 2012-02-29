@@ -56,7 +56,7 @@ class Sprite
   def output_stylesheet(directory, results)
     if less?
       output_less(directory, results)
-    if sass?
+	  elsif sass?
       output_sass(directory, results)
     elsif scss?
       output_scss(directory, results)
