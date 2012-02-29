@@ -20,6 +20,7 @@ class Sprite
 		@engine = @config['engine'] || "css"
 		@default_width=@config['defaultWidth']||16
 		@default_height=@config['defaultHeight']||16
+		@prefix = @config['prefix']||""
 	end
 
 	# execute the css sprite operation
@@ -278,9 +279,9 @@ class Sprite
 	def class_name(name)
 		if (name=~/[_-]active$/)
 			class_name=name.gsub('/', ' .').gsub(/[_-]hover\b/, '').gsub(/[_-]active\b/, '')
-			"a:hover .#{class_name}, .active .#{class_name}"
+			"a:hover .#{@prefix+class_name}, .active .#{@prefix+class_name}"
 		else
-			".#{name.gsub('/', ' .').gsub(/[_-]hover\b/, ':hover').gsub(/[_-]active\b/, '.active')}"
+			"."@prefix+"#{name.gsub('/', ' .').gsub(/[_-]hover\b/, ':hover').gsub(/[_-]active\b/, '.active')}"
 
 		end
 	end
