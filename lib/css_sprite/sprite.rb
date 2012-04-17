@@ -256,10 +256,10 @@ class Sprite
 				results.each do |result|
 					f.print "#{class_name(result[:name])} \{\n"
 					f.print "  background-position: #{-result[:x]}px #{-result[:y]}px;\n"
-					if (result[:width]!=@default_width || result[:height]!=@default_height)
+					#if (result[:width]!=@default_width || result[:height]!=@default_height)
 						f.print "  width: #{result[:width]}px;\n" if result[:width]
 						f.print "  height: #{result[:height]}px;\n" if result[:height]
-					end
+					#end
 					f.print " \}\n"
 				end
 			end
