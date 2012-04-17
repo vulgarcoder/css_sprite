@@ -256,10 +256,10 @@ class Sprite
 				results.each do |result|
 					f.print "#{class_name(result[:name])} \{\n"
 					f.print "  background-position: #{-result[:x]}px #{-result[:y]}px;\n"
-					#if (result[:width]!=@default_width || result[:height]!=@default_height)
-						f.print "  width: #{result[:width]}px;\n" #if result[:width]
-						f.print "  height: #{result[:height]}px;\n" #if result[:height]
-					#end
+					if (result[:width]!=@default_width || result[:height]!=@default_height)
+						f.print "  width: #{result[:width]}px;\n" if result[:width]
+						f.print "  height: #{result[:height]}px;\n" if result[:height]
+					end
 					f.print " \}\n"
 				end
 			end
@@ -340,14 +340,15 @@ class Sprite
 	# if the hover class has the same width and height property with not hover class,
 	# then the hover class does not need width and height
 	def need_wh?(image, directory)
-		name = get_image_name(image, directory)
-		if hover?(name) or active?(name)
-			not_file = image.filename.sub(/[_-](hover|active)\./, '.').sub(/[_-](hover|active)\//, '/')
-			if File.exist?(not_file)
-				not_image = get_image(not_file)
-				return false if image.columns == not_image.columns and image.rows == not_image.rows
-			end
-		end
+	#allways return true	
+		#name = get_image_name(image, directory)
+		#if hover?(name) or active?(name)
+			#not_file = image.filename.sub(/[_-](hover|active)\./, '.').sub(/[_-](hover|active)\//, '/')
+			#if File.exist?(not_file)
+				#not_image = get_image(not_file)
+				#return false if image.columns == not_image.columns and image.rows == not_image.rows
+			#end
+		#end
 		return true
 	end
 
