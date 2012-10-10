@@ -18,8 +18,8 @@ class Sprite
 		@css_images_path = @config['css_images_path'] ||= "images"
 		@format = @config['format'] ? @config['format'].downcase : "png"
 		@engine = @config['engine'] || "css"
-		@default_width=@config['defaultWidth']||16
-		@default_height=@config['defaultHeight']||16
+		@default_width=@config['default_width']||14
+		@default_height=@config['default_height']||14
 		@prefix = @config['prefix']||""
 	end
 
@@ -332,6 +332,7 @@ class Sprite
 	# get image properties, including name, width and height
 	def image_properties(image, directory)
 		name = get_image_name(image, directory)
+		puts name
 		need_wh?(image, directory) ? {:name => name, :width => image.columns, :height => image.rows} : {:name => name}
 	end
 
