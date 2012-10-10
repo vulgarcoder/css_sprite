@@ -332,7 +332,6 @@ class Sprite
 	# get image properties, including name, width and height
 	def image_properties(image, directory)
 		name = get_image_name(image, directory)
-		puts name
 		need_wh?(image, directory) ? {:name => name, :width => image.columns, :height => image.rows} : {:name => name}
 	end
 
