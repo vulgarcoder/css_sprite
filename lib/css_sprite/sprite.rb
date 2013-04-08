@@ -13,6 +13,7 @@ class Sprite
 		end
 
 		@image_path = File.expand_path(File.join(Rails.root, @config['image_path'] || 'public/images'))
+		@dest_image_path=File.expand_path(File.join(Rails.root, @config['dest_image_path'] || 'public/images'))
 		@stylesheet_path = File.expand_path(File.join(Rails.root, @config['stylesheet_path'] || 'public/stylesheets'))
 
 		@css_images_path = @config['css_images_path'] ||= "images"
@@ -304,7 +305,7 @@ class Sprite
 
 	# destination css sprite image path
 	def dest_image_path(directory)
-		directory + "." + @format
+		File.join(@dest_image_path,File.basename(directory))+"."+@format
 	end
 
 	# destination css sprite image name
