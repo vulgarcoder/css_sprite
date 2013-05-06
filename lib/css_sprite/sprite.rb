@@ -284,7 +284,8 @@ class Sprite
 	def class_name(name)
 		if (name=~/[_-]active$/)
 			class_name=name.gsub('/', ' .').gsub(/[_-]hover\b/, '').gsub(/[_-]active\b/, '')
-			"a:hover .#{@prefix+class_name}, .open .#{@prefix+class_name},.active .#{@prefix+class_name}"
+			# "a:hover .#{@prefix+class_name}, .open .#{@prefix+class_name},.active .#{@prefix+class_name}"
+			"a:hover .#{@prefix+class_name},.active .#{@prefix+class_name}"
 		elsif (name=~/[&]active$/)
 			"."+@prefix+"#{name.gsub('/', ' .').gsub(/[&]active\b/, '.active')}"
 		else
